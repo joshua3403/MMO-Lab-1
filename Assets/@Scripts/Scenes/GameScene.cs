@@ -1,5 +1,6 @@
-public class TitleScene : BaseScene
+public class GameScene : BaseScene
 {
+
 
     public override bool Initialize()
     {
@@ -8,8 +9,9 @@ public class TitleScene : BaseScene
             return false;
         }
 
-        SceneType = Define.EScene.TitleScene;
+        SceneType = Define.EScene.GameScene;
 
+        // TODO
 
         return true;
     }
@@ -18,4 +20,5 @@ public class TitleScene : BaseScene
     {
 
     }
+
 }

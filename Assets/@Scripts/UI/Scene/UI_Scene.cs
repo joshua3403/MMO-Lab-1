@@ -1,6 +1,5 @@
-public class TitleScene : BaseScene
+public class UI_Scene : UI_Base
 {
-
     public override bool Initialize()
     {
         if (base.Initialize() == false)
@@ -8,14 +7,7 @@ public class TitleScene : BaseScene
             return false;
         }
 
-        SceneType = Define.EScene.TitleScene;
-
-
+        Managers.UIManager.SetCanvas(gameObject, false);
         return true;
-    }
-
-    public override void Clear()
-    {
-
     }
 }

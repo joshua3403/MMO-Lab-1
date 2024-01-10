@@ -31,10 +31,10 @@ public class ResourceManager
             return null;
         }
 
-        //if (pooling)
-        //{
-        //    return Managers.PoolManager.Pop(prefab);
-        //}
+        if (pooling)
+        {
+            return Managers.PoolManager.Pop(prefab);
+        }
 
         GameObject go = Object.Instantiate(prefab, parent);
         go.name = prefab.name;
@@ -49,10 +49,10 @@ public class ResourceManager
             return;
         }
 
-        //if (Managers.PoolManager.Push(go))
-        //{
-        //    return;
-        //}
+        if (Managers.PoolManager.Push(go))
+        {
+            return;
+        }
 
         Object.Destroy(go);
     }

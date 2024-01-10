@@ -1,14 +1,22 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
 public class SceneManagerEx
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    public BaseScene CurrentScene => GameObject.FindObjectOfType<BaseScene>();
 
+    public void LoadScene(Define.EScene type)
+    {
+        SceneManager.LoadScene(GetSceneName(type));
     }
 
-    // Update is called once per frame
-    void Update()
+    private string GetSceneName(Define.EScene type)
     {
+        return System.Enum.GetName(typeof(Define.EScene), type);
+    }
 
+    public void Clear()
+    {
+        CurrentScene.Clear();
     }
 }
