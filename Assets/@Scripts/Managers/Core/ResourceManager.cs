@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 
 public class ResourceManager
 {
-    private Dictionary<string, UnityEngine.Object> _resources = new();
+    private Dictionary<string, Object> _resources = new();
     private Dictionary<string, AsyncOperationHandle> _handles = new();
 
     #region Load Resource
