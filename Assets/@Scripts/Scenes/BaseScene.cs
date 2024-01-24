@@ -1,28 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static Define;
 
 public abstract class BaseScene : InitBase
 {
-    public EScene SceneType { get; protected set; } = Define.EScene.Unknown;
+	public EScene SceneType { get; protected set; } = EScene.Unknown;
 
-    public override bool Initialize()
-    {
-        if (base.Initialize() == false)
-        {
-            return false;
-        }
+	public override bool Init()
+	{
+		if (base.Init() == false)
+			return false;
 
-        var obj = GameObject.FindObjectOfType(typeof(EventSystem));
-        if (obj == null)
-        {
-            var go = new GameObject() { name = "@EventSystem" };
-            go.AddComponent<EventSystem>();
-            go.AddComponent<StandaloneInputModule>();
-        }
+		Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
+		if (obj == null)
+		{
+			GameObject go = new GameObject() { name = "@EventSystem" };
+			go.AddComponent<EventSystem>();
+			go.AddComponent<StandaloneInputModule>();
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public abstract void Clear();
+	public abstract void Clear();
 }

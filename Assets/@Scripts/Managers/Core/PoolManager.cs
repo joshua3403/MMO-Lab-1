@@ -1,105 +1,100 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
 internal class Pool
 {
-    private GameObject _prefab;
-    private IObjectPool<GameObject> _pool;
+	private GameObject _prefab;
+	private IObjectPool<GameObject> _pool;
 
-    private Transform _root;
-    private Transform Root
-    {
-        get
-        {
-            if (_root == null)
-            {
-                var go = new GameObject() { name = $"@{_prefab.name}Pool" };
-                _root = go.transform;
-            }
+	private Transform _root;
+	private Transform Root
+	{
+		get
+		{
+			if (_root == null)
+			{
+				GameObject go = new GameObject() { name = $"@{_prefab.name}Pool" };
+				_root = go.transform;
+			}
 
-            return _root;
-        }
-    }
+			return _root;
+		}
+	}
 
-    public Pool(GameObject prefab)
-    {
-        _prefab = prefab;
-        _pool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy);
-    }
+	public Pool(GameObject prefab)
+	{
+		_prefab = prefab;
+		_pool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy);
+	}
 
-    public void Push(GameObject gameObject)
-    {
-        if (gameObject.activeSelf)
-        {
-            _pool.Release(gameObject);
-        }
-    }
+	public void Push(GameObject go)
+	{
+		if (go.activeSelf)
+			_pool.Release(go);
+	}
 
-    public GameObject Pop()
-    {
-        return _pool.Get();
-    }
+	public GameObject Pop()
+	{
+		return _pool.Get();
+	}
 
-    #region Functions
-    private GameObject OnCreate()
-    {
-        var go = GameObject.Instantiate(_prefab);
-        go.transform.SetParent(Root);
-        go.name = _prefab.name;
-        return go;
-    }
+	#region Funcs
+	private GameObject OnCreate()
+	{
+		GameObject go = GameObject.Instantiate(_prefab);
+		go.transform.SetParent(Root);
+		go.name = _prefab.name;
+		return go;
+	}
 
-    private void OnGet(GameObject gameObject)
-    {
-        gameObject.SetActive(true);
-    }
+	private void OnGet(GameObject go)
+	{
+		go.SetActive(true);
+	}
 
-    private void OnRelease(GameObject gameObject)
-    {
-        gameObject.SetActive(false);
-    }
+	private void OnRelease(GameObject go)
+	{
+		go.SetActive(false);
+	}
 
-    private void OnDestroy(GameObject gameObject)
-    {
-        GameObject.Destroy(gameObject);
-    }
-    #endregion
+	private void OnDestroy(GameObject go)
+	{
+		GameObject.Destroy(go);
+	}
+	#endregion
 }
 
 public class PoolManager
 {
-    private Dictionary<string, Pool> _pools = new();
+	private Dictionary<string, Pool> _pools = new Dictionary<string, Pool>();
 
-    public GameObject Pop(GameObject gameObject)
-    {
-        if (_pools.ContainsKey(gameObject.name) == false)
-        {
-            CreatePool(gameObject);
-        }
+	public GameObject Pop(GameObject prefab)
+	{
+		if (_pools.ContainsKey(prefab.name) == false)
+			CreatePool(prefab);
 
-        return _pools[gameObject.name].Pop();
-    }
+		return _pools[prefab.name].Pop();
+	}
 
-    public bool Push(GameObject gameObject)
-    {
-        if (_pools.ContainsKey(gameObject.name) == false)
-        {
-            return false;
-        }
+	public bool Push(GameObject go)
+	{
+		if (_pools.ContainsKey(go.name) == false)
+			return false;
 
-        _pools[gameObject.name].Push(gameObject);
-        return true;
-    }
+		_pools[go.name].Push(go);
+		return true;
+	}
 
-    public void Clear()
-    {
-        _pools.Clear();
-    }
+	public void Clear()
+	{
+		_pools.Clear();
+	}
 
-    private void CreatePool(GameObject gameObject)
-    {
-        var pool = new Pool(gameObject);
-        _pools.Add(gameObject.name, pool);
-    }
+	private void CreatePool(GameObject original)
+	{
+		Pool pool = new Pool(original);
+		_pools.Add(original.name, pool);
+	}
 }

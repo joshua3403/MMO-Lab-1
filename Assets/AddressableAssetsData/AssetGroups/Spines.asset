@@ -15,11 +15,65 @@ MonoBehaviour:
   m_GroupName: Spines
   m_Data:
     m_SerializedData: []
-  m_GUID: a445b2094d28cdc45b2880f26768c601
-  m_SerializeEntries: []
+  m_GUID: 104219c8489c7c34bb509ca4cd5aa287
+  m_SerializeEntries:
+  - m_GUID: cfd750e2c65c7944e836f8353fec2cea
+    m_Address: wood_1_SkeletonData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e42fb9220d96d7e4c86a9de95818b96b
+    m_Address: wood_2_SkeletonData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e308705ac9a774499fb319ab993deb4
+    m_Address: knight_SkeletonData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47fa580edd880c749a479a92662f21a4
+    m_Address: wizard_SkeletonData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 378dd7a7a523b164496aa5b261580005
+    m_Address: bear_SkeletonData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf9ec093fe189a04d92278eaa0f28574
+    m_Address: goblin_SkeletonData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df80bf8d422a13445870a721c43099d8
+    m_Address: spider_common_SkeletonData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ce17ac50939a804bb5f392fb7971eef
+    m_Address: spider_rare_SkeletonData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d89853370f7a3164f99dbc20eea32225
+    m_Address: wood_common_SkeletonData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
-  m_Settings: {fileID: 11400000, guid: 763ccd76181b3f14fa2bbe42ac085104, type: 2}
+  m_Settings: {fileID: 11400000, guid: 3b34cd1d0f58d714b8b4fcf9c86bdbb4, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 8b51fdc181de09e4a93774056df04bf2, type: 2}
-    - {fileID: 11400000, guid: 2490e4fd69c3c1e42acf5631f3daff57, type: 2}
+    - {fileID: 11400000, guid: 26444c2ed8af81d44805e10bb2f76d5e, type: 2}
+    - {fileID: 11400000, guid: 4a34936bfeb8ee64a834ca62d49cf283, type: 2}

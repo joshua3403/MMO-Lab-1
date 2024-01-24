@@ -15,17 +15,17 @@ MonoBehaviour:
   m_GroupName: UI
   m_Data:
     m_SerializedData: []
-  m_GUID: ba66e9b9ea2558a4f8b9daeea66be46a
+  m_GUID: 3b7854348e548ae4dbc40f8559d0676b
   m_SerializeEntries:
-  - m_GUID: a0a254d365552a7448fdd63217dc94db
-    m_Address: Assets/@Resources/Prefabs/UI/UI_TitleScene.prefab
+  - m_GUID: 6c888cb264b6345258390f128c6e3c3e
+    m_Address: UI_Joystick
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
-  m_Settings: {fileID: 11400000, guid: 763ccd76181b3f14fa2bbe42ac085104, type: 2}
+  m_Settings: {fileID: 11400000, guid: 3b34cd1d0f58d714b8b4fcf9c86bdbb4, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 9a85d248457bb21498da0b1f4b73d222, type: 2}
-    - {fileID: 11400000, guid: 27e601235ad176c458caa67be833d3bd, type: 2}
+    - {fileID: 11400000, guid: f34457671d3ca944f9c929979727302c, type: 2}
+    - {fileID: 11400000, guid: bff39dbe7fd8f6148b549e39d4587cc6, type: 2}

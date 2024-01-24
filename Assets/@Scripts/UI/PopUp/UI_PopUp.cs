@@ -1,18 +1,20 @@
-public class UI_PopUp : UI_Base
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UI_Popup : UI_Base
 {
-    public override bool Initialize()
-    {
-        if (base.Initialize() == false)
-        {
-            return false;
-        }
+	public override bool Init()
+	{
+		if (base.Init() == false)
+			return false;
 
-        Managers.UIManager.SetCanvas(gameObject, false);
-        return true;
-    }
+		Managers.UI.SetCanvas(gameObject, true);
+		return true;
+	}
 
-    public virtual void ClosePopUpUI()
-    {
-        Managers.UIManager.ClosePopupUI(this);
-    }
+	public virtual void ClosePopupUI()
+	{
+		Managers.UI.ClosePopupUI(this);
+	}
 }
