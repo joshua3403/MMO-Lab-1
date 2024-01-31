@@ -66,12 +66,12 @@ public class Env : BaseObject
     }
 
     #region Battle
-    public override void OnDamaged(BaseObject attacker)
+    public override void OnDamaged(BaseObject attacker, SkillBase skillBase)
     {
         if (EnvState == EEnvState.Dead)
             return;
 
-        base.OnDamaged(attacker);
+        base.OnDamaged(attacker, skillBase);
 
         float finalDamage = 1;
         EnvState = EEnvState.OnDamaged;
@@ -80,12 +80,12 @@ public class Env : BaseObject
 
         Hp = Mathf.Clamp(Hp - finalDamage, 0, MaxHp);
         if (Hp <= 0)
-            OnDead(attacker);
+            OnDead(attacker, skillBase);
     }
 
-    public override void OnDead(BaseObject attacker)
+    public override void OnDead(BaseObject attacker, SkillBase skillBase)
     {
-        base.OnDead(attacker);
+        base.OnDead(attacker, skillBase);
 
         EnvState = EEnvState.Dead;
 

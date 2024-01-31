@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -8,7 +7,7 @@ using Object = UnityEngine.Object;
 
 public class ResourceManager
 {
-	private Dictionary<string, UnityEngine.Object> _resources = new Dictionary<string, UnityEngine.Object>();
+	private Dictionary<string, Object> _resources = new Dictionary<string, Object>();
 	private Dictionary<string, AsyncOperationHandle> _handles = new Dictionary<string, AsyncOperationHandle>();
 
 	#region Load Resource

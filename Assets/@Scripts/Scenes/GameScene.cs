@@ -20,26 +20,32 @@ public class GameScene : BaseScene
         var heroCamp = Managers.Object.Spawn<HeroCamp>(new Vector3Int(-10, -5, 0), 0);
 
 
-		for(int i = 0; i < 5; i++)
-		{
-            var hero2 = Managers.Object.Spawn<Hero>(new Vector3Int(-10 + Random.RandomRange(-5, 5), -5 + Random.RandomRange(-5, 5), 0), HERO_KNIGHT_ID);
+        for (int i = 0; i < 5; i++)
+        {
+            //int heroTemplateID = HERO_WIZARD_ID + Random.Range(0, 5);
+            int heroTemplateID = HERO_KNIGHT_ID;
+            //int heroTemplateID = HERO_WIZARD_ID;
+            Hero hero = Managers.Object.Spawn<Hero>(new Vector3Int(-10 + Random.Range(-5, 5), -5 + Random.Range(-5, 5), 0), heroTemplateID);
         }
 
-		var camera = Camera.main.GetOrAddComponent<CameraController>();
+        var camera = Camera.main.GetOrAddComponent<CameraController>();
 		camera.Target = heroCamp;
 
 		Managers.UI.ShowBaseUI<UI_Joystick>();
 
 
         {
-            Monster monster = Managers.Object.Spawn<Monster>(new Vector3Int(0, 1, 0), MONSTER_BEAR_ID);
-            monster.CreatureState = ECreatureState.Idle;
+            Managers.Object.Spawn<Monster>(new Vector3Int(0, 1, 0), MONSTER_BEAR_ID);
+            Managers.Object.Spawn<Monster>(new Vector3Int(0, 1, 0), MONSTER_GOBLIN_ARCHER_ID);
+            //Managers.Object.Spawn<Monster>(new Vector3Int(0, 1, 0), MONSTER_SLIME_ID);
+            Managers.Object.Spawn<Monster>(new Vector3Int(0, 1, 0), MONSTER_SPIDER_COMMON_ID);
+            Managers.Object.Spawn<Monster>(new Vector3Int(0, 1, 0), MONSTER_WOOD_COMMON_ID);
+
         }
 
 
         {
-            Env monster = Managers.Object.Spawn<Env>(new Vector3Int(0, 2, 0), ENV_TREE1_ID);
-            monster.EnvState = EEnvState.Idle;
+            Managers.Object.Spawn<Env>(new Vector3Int(0, 2, 0), ENV_TREE1_ID);
         }
 
         // TODO

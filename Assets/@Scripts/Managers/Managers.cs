@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
+	private static bool _isInitialized = false;
 	private static Managers s_instance;
 	private static Managers Instance { get { Init(); return s_instance; } }
 
@@ -34,7 +35,7 @@ public class Managers : MonoBehaviour
 
 	public static void Init()
 	{
-		if (s_instance == null)
+		if (s_instance == null && _isInitialized == false)
 		{
 			GameObject go = GameObject.Find("@Managers");
 			if (go == null)
@@ -47,7 +48,10 @@ public class Managers : MonoBehaviour
 
 			// 초기화
 			s_instance = go.GetComponent<Managers>();
-		}
+
+			_isInitialized = true;
+
+        }
 	}
 
 }
