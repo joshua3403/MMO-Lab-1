@@ -9,6 +9,7 @@ public class ObjectManager
     public HashSet<Monster> Monsters { get; } = new();
     public HashSet<Env> Envs { get; } = new();
     public HeroCamp HeroCamp { get; private set; }
+    public HashSet<Projectile> Projectiles { get; } = new HashSet<Projectile>();
 
     #region Roots
     public Transform GetRootTransform(string name)
@@ -23,6 +24,7 @@ public class ObjectManager
     public Transform HeroRoot { get { return GetRootTransform("@Heroes"); } }
     public Transform MonsterRoot { get { return GetRootTransform("@Monsters"); } }
     public Transform EnvRoot { get { return GetRootTransform("@Envs"); } }
+    public Transform ProjectileRoot { get { return GetRootTransform("@Projectiles"); } }
 
     #endregion
 
@@ -57,7 +59,12 @@ public class ObjectManager
         }
         else if (obj.ObjectType == EObjectType.Projectile)
         {
-            // TODO
+            obj.transform.parent = ProjectileRoot;
+
+            Projectile projectile = go.GetComponent<Projectile>();
+            Projectiles.Add(projectile);
+
+            projectile.SetInfo(templateId);
         }
         else if (obj.ObjectType == EObjectType.Env)
         {
@@ -103,7 +110,8 @@ public class ObjectManager
         }
         else if (obj.ObjectType == EObjectType.Projectile)
         {
-            // TODO
+            Projectile projectile = obj as Projectile;
+            Projectiles.Remove(projectile);
         }
         else if (obj.ObjectType == EObjectType.Env)
         {
