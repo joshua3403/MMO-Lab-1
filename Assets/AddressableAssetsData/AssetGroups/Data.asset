@@ -17,32 +17,38 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 4ef6f93e6dc9c1540812bda65fca63fe
   m_SerializeEntries:
-  - m_GUID: 03d368da76cfe417eb28b800d2af3afa
-    m_Address: SkillData
+  - m_GUID: db7c0b011b606ab47ae392ae588559f4
+    m_Address: EnvData
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 99489504c00b74b1ca41c8d3296302a4
-    m_Address: ProjectileData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8d479f0af27b24eefa5d036540ba8aff
+  - m_GUID: 3a5adb55a15c39642bfec4606ca19735
     m_Address: MonsterData
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: adb34741022e544038e04ab74fac56bd
+  - m_GUID: 611fe450941efec419a36130a28acc4a
     m_Address: HeroData
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fc0a7eec3de45426996ef01f590f5a2a
-    m_Address: EnvData
+  - m_GUID: eb54e0b78d8b95d4291d0f9973b8668e
+    m_Address: SkillData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 843fcb5b0a70c854f8b4c9f5416e8689
+    m_Address: ProjectileData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 894df532750051b43a5df0b583b6c101
+    m_Address: BaseMapCollision
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

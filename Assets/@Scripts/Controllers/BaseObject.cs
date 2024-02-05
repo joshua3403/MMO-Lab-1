@@ -1,125 +1,164 @@
 using Spine;
 using Spine.Unity;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static Define;
 
 public class BaseObject : InitBase
 {
-    public EObjectType ObjectType { get; protected set; } = EObjectType.None;
-    public CircleCollider2D Collider { get; private set; }
-    public SkeletonAnimation SkeletonAnimation { get; private set; }
-    public Rigidbody2D RigidBody { get; private set; }
+	public EObjectType ObjectType { get; protected set; } = EObjectType.None;
+	public CircleCollider2D Collider { get; private set; }
+	public SkeletonAnimation SkeletonAnim { get; private set; }
+	public Rigidbody2D RigidBody { get; private set; }
 
-    public float ColliderRadius { get { return Collider != null ? Collider.radius : 0.0f; } }
-    public Vector3 CenterPosition { get { return transform.position + Vector3.up * ColliderRadius; } }
+	public float ColliderRadius { get { return Collider != null ? Collider.radius : 0.0f; } }
+	public Vector3 CenterPosition { get { return transform.position + Vector3.up * ColliderRadius; } }
 
-    public int DataTemplateID { get; set; }
+	public int DataTemplateID { get; set; }
 
-    bool _lookLeft = true;
-    public bool LookLeft
-    {
-        get { return _lookLeft; }
-        set
-        {
-            _lookLeft = value;
-            Flip(!value);
-        }
-    }
+	bool _lookLeft = true;
+	public bool LookLeft
+	{
+		get { return _lookLeft; }
+		set
+		{
+			_lookLeft = value;
+			Flip(!value);
+		}
+	}
 
-    public override bool Init()
-    {
-        if (base.Init() == false)
-            return false;
+	public override bool Init()
+	{
+		if (base.Init() == false)
+			return false;
 
-        Collider = gameObject.GetOrAddComponent<CircleCollider2D>();
-        SkeletonAnimation = GetComponent<SkeletonAnimation>();
-        RigidBody = GetComponent<Rigidbody2D>();
+		Collider = gameObject.GetOrAddComponent<CircleCollider2D>();
+		SkeletonAnim = GetComponent<SkeletonAnimation>();
+		RigidBody = GetComponent<Rigidbody2D>();
 
-        return true;
-    }
+		return true;
+	}
 
-    public void LookAtTarget(BaseObject target)
-    {
-        Vector2 dir = target.transform.position - transform.position;
-        if (dir.x < 0)
-            LookLeft = true;
-        else
-            LookLeft = false;
-    }
+	public void LookAtTarget(BaseObject target)
+	{
+		Vector2 dir = target.transform.position - transform.position;
+		if (dir.x < 0)
+			LookLeft = true;
+		else
+			LookLeft = false;
+	}
 
-    #region Battle
-    public virtual void OnDamaged(BaseObject attacker, SkillBase skillBase)
-    {
+	#region Battle
+	public virtual void OnDamaged(BaseObject attacker, SkillBase skill)
+	{
 
-    }
+	}
 
-    public virtual void OnDead(BaseObject attacker, SkillBase skillBase)
-    {
+	public virtual void OnDead(BaseObject attacker, SkillBase skill)
+	{
 
-    }
-    #endregion
+	}
+	#endregion
 
+	#region Spine
+	protected virtual void SetSpineAnimation(string dataLabel, int sortingOrder)
+	{
+		if (SkeletonAnim == null)
+			return;
 
-    #region Spine
-    protected virtual void SetSpineAnimation(string dataLabel, int sortingOrder)
-    {
-        if (SkeletonAnimation == null)
-            return;
+		SkeletonAnim.skeletonDataAsset = Managers.Resource.Load<SkeletonDataAsset>(dataLabel);
+		SkeletonAnim.Initialize(true);
 
-        SkeletonAnimation.skeletonDataAsset = Managers.Resource.Load<SkeletonDataAsset>(dataLabel);
-        SkeletonAnimation.Initialize(true);
+		// Spine SkeletonAnimation은 SpriteRenderer 를 사용하지 않고 MeshRenderer을 사용함
+		// 그렇기떄문에 2D Sort Axis가 안먹히게 되는데 SortingGroup을 SpriteRenderer,MeshRenderer을 같이 계산함.
+		SortingGroup sg = Util.GetOrAddComponent<SortingGroup>(gameObject);
+		sg.sortingOrder = sortingOrder;
+	}
 
-        // Spine SkeletonAnimation은 SpriteRenderer 를 사용하지 않고 MeshRenderer을 사용함
-        // 그렇기떄문에 2D Sort Axis가 안먹히게 되는데 SortingGroup을 SpriteRenderer,MeshRenderer을 같이 계산함.
-        SortingGroup sg = Util.GetOrAddComponent<SortingGroup>(gameObject);
-        sg.sortingOrder = sortingOrder;
-    }
+	protected virtual void UpdateAnimation()
+	{
+	}
 
-    protected virtual void UpdateAnimation()
-    {
-    }
+	public void PlayAnimation(int trackIndex, string AnimName, bool loop)
+	{
+		if (SkeletonAnim == null)
+			return;
 
-    public void SetRigidBodyVelocity(Vector2 velocity)
-    {
-        if (RigidBody == null)
-            return;
+		SkeletonAnim.AnimationState.SetAnimation(trackIndex, AnimName, loop);
+	}
 
-        RigidBody.velocity = velocity;
+	public void AddAnimation(int trackIndex, string AnimName, bool loop, float delay)
+	{
+		if (SkeletonAnim == null)
+			return;
 
-        if (velocity.x < 0)
-            LookLeft = true;
-        else if (velocity.x > 0)
-            LookLeft = false;
-    }
+		SkeletonAnim.AnimationState.AddAnimation(trackIndex, AnimName, loop, delay);
+	}
 
-    public void PlayAnimation(int trackIndex, string AnimName, bool loop)
-    {
-        if (SkeletonAnimation == null)
-            return;
+	public void Flip(bool flag)
+	{
+		if (SkeletonAnim == null)
+			return;
 
-        SkeletonAnimation.AnimationState.SetAnimation(trackIndex, AnimName, loop);
-    }
+		SkeletonAnim.Skeleton.ScaleX = flag ? -1 : 1;
+	}
 
-    public void AddAnimation(int trackIndex, string AnimName, bool loop, float delay)
-    {
-        if (SkeletonAnimation == null)
-            return;
+	public virtual void OnAnimEventHandler(TrackEntry trackEntry, Spine.Event e)
+	{
+		Debug.Log("OnAnimEventHandler");
+	}
+	#endregion
 
-        SkeletonAnimation.AnimationState.AddAnimation(trackIndex, AnimName, loop, delay);
-    }
+	#region Map
+	public bool LerpCellPosCompleted { get; protected set; }
 
-    public void Flip(bool flag)
-    {
-        if (SkeletonAnimation == null)
-            return;
+	Vector3Int _cellPos;
+	public Vector3Int CellPos
+	{
+		get { return _cellPos; }
+		protected set
+		{
+			_cellPos = value;
+			LerpCellPosCompleted = false;
+		}
+	}
 
-        SkeletonAnimation.Skeleton.ScaleX = flag ? -1 : 1;
-    }
+	public void SetCellPos(Vector3Int cellPos, bool forceMove = false)
+	{
+		CellPos = cellPos;
+		LerpCellPosCompleted = false;
 
-    public virtual void OnAnimEventHandler(TrackEntry trackEntry, Spine.Event e)
-    {
-        Debug.Log("OnAnimEventHandler");
-    }
-    #endregion
+		if (forceMove)
+		{
+			transform.position = Managers.Map.Cell2World(CellPos);
+			LerpCellPosCompleted = true;
+		}
+	}
+
+	public void LerpToCellPos(float moveSpeed)
+	{
+		if (LerpCellPosCompleted)
+			return;
+
+		Vector3 destPos = Managers.Map.Cell2World(CellPos);
+		Vector3 dir = destPos - transform.position;
+
+		if (dir.x < 0)
+			LookLeft = true;
+		else
+			LookLeft = false;
+
+		if (dir.magnitude < 0.01f)
+		{
+			transform.position = destPos;
+			LerpCellPosCompleted = true;
+			return;
+		}
+
+		float moveDist = Mathf.Min(dir.magnitude, moveSpeed * Time.deltaTime);
+		transform.position += dir.normalized * moveDist;
+	}
+	#endregion
 }

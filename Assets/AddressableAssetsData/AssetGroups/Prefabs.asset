@@ -23,32 +23,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5a40e413d750cdb44b0fe888fbf55284
-    m_Address: BaseMap
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4cf2444304c9e44f78330891433d2330
+  - m_GUID: 45823a6326f3b8c4ead9fbe0893db3be
     m_Address: Monster
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 932a5e90b76924dcc8772c75cea143b4
+  - m_GUID: ec721a68e8c259149b0cb5799ad2e2b8
     m_Address: Env
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8bf6ebb4eb25a47df9e007420504acc9
+  - m_GUID: f47c398c87ed2e841acfd50260b3a10a
     m_Address: HeroCamp
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fb3b84ccb9b5b4ff68ba4ee36820ed2b
+  - m_GUID: 8b1e0ccdd80d98a49a0fd17692f2e50e
     m_Address: Projectile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9beaf8938c28f834d9738b7b52428d5d
+    m_Address: BaseMap
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
