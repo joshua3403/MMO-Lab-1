@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Define;
 
@@ -70,18 +71,18 @@ public static class Util
 		return parsedColor;
 	}
 
-	public static ECreatureType DetermineTargetType(ECreatureType ownerType, bool findAllies)
+	public static EObjectType DetermineTargetType(EObjectType ownerType, bool findAllies)
 	{
-		if (ownerType == Define.ECreatureType.Hero)
+		if (ownerType == Define.EObjectType.Hero)
 		{
-			return findAllies ? ECreatureType.Hero : ECreatureType.Monster;
+			return findAllies ? EObjectType.Hero : EObjectType.Monster;
 		}
-		else if (ownerType == Define.ECreatureType.Monster)
+		else if (ownerType == Define.EObjectType.Monster)
 		{
-			return findAllies ? ECreatureType.Monster : ECreatureType.Hero;
+			return findAllies ? EObjectType.Monster : EObjectType.Hero;
 		}
 
-		return ECreatureType.None;
+		return EObjectType.None;
 	}
 
 	public static float GetEffectRadius(EEffectSize size)
@@ -103,5 +104,25 @@ public static class Util
 			default:
 				return EFFECT_SMALL_RADIUS;
 		}
+	}
+
+	public static T RandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector)
+	{
+		float totalWeight = sequence.Sum(weightSelector);
+
+		double itemWeightIndex = new System.Random().NextDouble() * totalWeight;
+		float currentWeightIndex = 0;
+
+		foreach (var item in from weightedItem in sequence select new { Value = weightedItem, Weight = weightSelector(weightedItem) })
+		{
+			currentWeightIndex += item.Weight;
+
+			// If we've hit or passed the weight we are after for this item then it's the one we want....
+			if (currentWeightIndex >= itemWeightIndex)
+				return item.Value;
+
+		}
+
+		return default(T);
 	}
 }

@@ -13,6 +13,8 @@ public class ObjectManager
 	public HashSet<Env> Envs { get; } = new HashSet<Env>();
 	public HashSet<EffectBase> Effects { get; } = new HashSet<EffectBase>();
 	public HeroCamp Camp { get; private set; }
+	public HashSet<ItemHolder> ItemHolders { get; } = new HashSet<ItemHolder>();
+	public HashSet<Npc> Npcs { get; } = new HashSet<Npc>();
 
 	#region Roots
 	public Transform GetRootTransform(string name)
@@ -29,6 +31,8 @@ public class ObjectManager
 	public Transform ProjectileRoot { get { return GetRootTransform("@Projectiles"); } }
 	public Transform EnvRoot { get { return GetRootTransform("@Envs"); } }
 	public Transform EffectRoot { get { return GetRootTransform("@Effects"); } }
+	public Transform NpcRoot { get { return GetRootTransform("@Npc"); } }
+	public Transform ItemHolderRoot { get { return GetRootTransform("@ItemHolders"); } }
 	#endregion
 
 	public void ShowDamageFont(Vector2 position, float damage, Transform parent, bool isCritical = false)
@@ -61,24 +65,19 @@ public class ObjectManager
 
 		BaseObject obj = go.GetComponent<BaseObject>();
 
-		if (obj.ObjectType == EObjectType.Creature)
+		if (obj.ObjectType == EObjectType.Hero)
 		{
-			Creature creature = go.GetComponent<Creature>();
-			switch (creature.CreatureType)
-			{
-				case ECreatureType.Hero:
-					obj.transform.parent = HeroRoot;
-					Hero hero = creature as Hero;
-					Heroes.Add(hero);
-					break;
-				case ECreatureType.Monster:
-					obj.transform.parent = MonsterRoot;
-					Monster monster = creature as Monster;
-					Monsters.Add(monster);
-					break;
-			}
-
-			creature.SetInfo(templateID);
+			obj.transform.parent = HeroRoot;
+			Hero hero = go.GetComponent<Hero>();
+			Heroes.Add(hero);
+			hero.SetInfo(templateID);
+		}
+		else if (obj.ObjectType == EObjectType.Monster)
+		{
+			obj.transform.parent = HeroRoot;
+			Monster monster = go.GetComponent<Monster>();
+			Monsters.Add(monster);
+			monster.SetInfo(templateID);
 		}
 		else if (obj.ObjectType == EObjectType.Projectile)
 		{
@@ -102,6 +101,22 @@ public class ObjectManager
 		{
 			Camp = go.GetComponent<HeroCamp>();
 		}
+		else if (obj.ObjectType == EObjectType.Npc)
+		{
+			obj.transform.parent = NpcRoot;
+
+			Npc npc = go.GetOrAddComponent<Npc>();
+			Npcs.Add(npc);
+
+			npc.SetInfo(templateID);
+		}
+		else if (obj.ObjectType == EObjectType.ItemHolder)
+		{
+			obj.transform.parent = ItemHolderRoot;
+
+			ItemHolder itemHolder = go.GetOrAddComponent<ItemHolder>();
+			ItemHolders.Add(itemHolder);
+		}
 
 		return obj as T;
 	}
@@ -110,20 +125,15 @@ public class ObjectManager
 	{
 		EObjectType objectType = obj.ObjectType;
 
-		if (obj.ObjectType == EObjectType.Creature)
+		if (obj.ObjectType == EObjectType.Hero)
 		{
-			Creature creature = obj.GetComponent<Creature>();
-			switch (creature.CreatureType)
-			{
-				case ECreatureType.Hero:
-					Hero hero = creature as Hero;
-					Heroes.Remove(hero);
-					break;
-				case ECreatureType.Monster:
-					Monster monster = creature as Monster;
-					Monsters.Remove(monster);
-					break;
-			}
+			Hero hero = obj.GetComponent<Hero>();
+			Heroes.Remove(hero);
+		}
+		else if (obj.ObjectType == EObjectType.Monster)
+		{
+			Monster monster = obj.GetComponent<Monster>();
+			Monsters.Remove(monster);
 		}
 		else if (obj.ObjectType == EObjectType.Projectile)
 		{
@@ -144,6 +154,16 @@ public class ObjectManager
 		{
 			Camp = null;
 		}
+		else if (obj.ObjectType == EObjectType.Npc)
+		{
+			Npc npc = obj as Npc;
+			Npcs.Remove(npc);
+		}
+		else if (obj.ObjectType == EObjectType.ItemHolder)
+		{
+			ItemHolder itemHolder = obj as ItemHolder;
+			ItemHolders.Remove(itemHolder);
+		}
 
 		Managers.Resource.Destroy(obj.gameObject);
 	}
@@ -154,14 +174,14 @@ public class ObjectManager
 		HashSet<Creature> targets = new HashSet<Creature>();
 		HashSet<Creature> ret = new HashSet<Creature>();
 
-		ECreatureType targetType = Util.DetermineTargetType(owner.CreatureType, isAllies);
+		EObjectType targetType = Util.DetermineTargetType(owner.ObjectType, isAllies);
 
-		if (targetType == ECreatureType.Monster)
+		if (targetType == EObjectType.Monster)
 		{
 			var objs = Managers.Map.GatherObjects<Monster>(owner.transform.position, range, range);
 			targets.AddRange(objs);
 		}
-		else if (targetType == ECreatureType.Hero)
+		else if (targetType == EObjectType.Hero)
 		{
 			var objs = Managers.Map.GatherObjects<Hero>(owner.transform.position, range, range);
 			targets.AddRange(objs);
@@ -200,14 +220,14 @@ public class ObjectManager
 		HashSet<Creature> targets = new HashSet<Creature>();
 		HashSet<Creature> ret = new HashSet<Creature>();
 
-		ECreatureType targetType = Util.DetermineTargetType(owner.CreatureType, isAllies);
+		EObjectType targetType = Util.DetermineTargetType(owner.ObjectType, isAllies);
 
-		if (targetType == ECreatureType.Monster)
+		if (targetType == EObjectType.Monster)
 		{
 			var objs = Managers.Map.GatherObjects<Monster>(owner.transform.position, range, range);
 			targets.AddRange(objs);
 		}
-		else if (targetType == ECreatureType.Hero)
+		else if (targetType == EObjectType.Hero)
 		{
 			var objs = Managers.Map.GatherObjects<Hero>(owner.transform.position, range, range);
 			targets.AddRange(objs);

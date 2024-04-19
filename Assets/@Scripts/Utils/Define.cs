@@ -33,22 +33,43 @@ public static class Define
 		Max,
 	}
 
+	public enum EHeroOwningState
+	{
+		Unowned,
+		Owned,
+		Picked,
+	}
+
 	public enum EObjectType
 	{
 		None,
 		HeroCamp,
-		Creature,
-		Projectile,
-		Env,
-		Effect,
-	}
-
-	public enum ECreatureType
-	{
-		None,
 		Hero,
 		Monster,
 		Npc,
+		Projectile,
+		Env,
+		Effect,
+		ItemHolder,
+	}
+
+	public enum ENpcType
+	{
+		None,
+		StartPosition,
+		Guild,
+		Portal,
+		Waypoint,
+		BlackSmith,
+		Training,
+		TreasureBox,
+		Dungeon,
+		Quest,
+		GoldStorage,
+		WoodStorage,
+		MineralStorage,
+		Exchange,
+		RuneStone,
 	}
 
 	public enum ECreatureState
@@ -188,6 +209,153 @@ public static class Define
 		CleanDebuff,
 	}
 
+	public enum ELanguage
+	{
+		Korean,
+		English,
+		French,
+		SimplifiedChinese,
+		TraditionalChinese,
+		Japanese
+	}
+
+	public enum EItemGrade
+	{
+		None,
+		Normal,
+		Rare,
+		Epic,
+		Legendary
+	}
+
+	public enum EItemGroupType
+	{
+		None,
+		Equipment,
+		Consumable,
+	}
+
+	public enum EItemType
+	{
+		None,
+		Weapon,
+		Armor,
+		Potion,
+		Scroll
+	}
+
+	public enum EItemSubType
+	{
+		None,
+
+		Sword,
+		Dagger,
+		Bow,
+
+		Helmet,
+		Armor,
+		Shield,
+		Gloves,
+		Shoes,
+
+		EnchantWeapon,
+		EnchantArmor,
+
+		HealthPotion,
+		ManaPotion,
+	}
+
+	public enum EEquipSlotType
+	{
+		None,
+		Weapon = 1,
+		Helmet = 2,
+		Armor = 3,
+		Shield = 4,
+		Gloves = 5,
+		Shoes = 6,
+		EquipMax,
+
+		Inventory = 100,
+		WareHouse = 200,
+	}
+
+	public enum EQuestPeriodType
+	{
+		Once, // 단발성
+		Daily,
+		Weekly,
+		Infinite, // 무한으로
+	}
+
+	public enum EQuestCondition
+	{
+		None,
+		Level,
+		ItemLevel,
+
+	}
+
+	public enum EQuestObjectiveType
+	{
+		KillMonster,
+		EarnMeat,
+		SpendMeat,
+		EarnWood,
+		SpendWood,
+		EarnMineral,
+		SpendMineral,
+		EarnGold,
+		SpendGold,
+		UseItem,
+		Survival,
+		ClearDungeon
+	}
+
+	public enum EQuestRewardType
+	{
+		Hero,
+		Gold,
+		Mineral,
+		Meat,
+		Wood,
+		Item,
+	}
+
+	public enum EQuestState
+	{
+		None,
+		Processing,
+		Completed,
+		Rewarded,
+	}
+
+	public enum EBroadcastEventType
+	{
+		None,
+		ChangeMeat,
+		ChangeWood,
+		ChangeMineral,
+		ChangeGold,
+		ChangeDia,
+		ChangeMaterials,
+		KillMonster,
+		LevelUp,
+		DungeonClear,
+		ChangeInventory,
+		ChangeCrew,
+		QuestClear,
+	}
+
+	public enum EResourceType
+	{
+		Wood,
+		Mineral,
+		Meat,
+		Gold,
+		Materials,
+		Dia
+	}
 
 	public const float EFFECT_SMALL_RADIUS = 2.5f;
 	public const float EFFECT_NORMAL_RADIUS = 4.5f;
@@ -244,6 +412,7 @@ public static class SortingLayers
 	public const int SPELL_INDICATOR = 200;
 	public const int CREATURE = 300;
 	public const int ENV = 300;
+	public const int NPC = 310;
 	public const int PROJECTILE = 310;
 	public const int SKILL_EFFECT = 310;
 	public const int DAMAGE_FONT = 410;
